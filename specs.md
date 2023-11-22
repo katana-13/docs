@@ -105,16 +105,16 @@ Gitlab
 Требования гайдлайнов:
 * 32-битный PNG (с альфа-каналом) мы делаем всегда без альфа-канала;
 * размеры: 512 х 512 пикселей;
-* максимальный размер файла: 1024 КБ
-[Здесь](https://developer.android.com/distribute/google-play/resources/icon-design-specifications)
+* максимальный размер файла: 1024 КБ  
+[Подробнее](https://developer.android.com/distribute/google-play/resources/icon-design-specifications)
 
 ### Требования Google Play к скриншотам
 Требования гайдлайнов:
 * формат JPEG или 24-битный PNG (без альфа-канала);
 * не менее 320 пикселей;
 * не более 3840 пикселей;
-* соотношение сторон не должно превышать 2:1.
-[Здесь](https://support.google.com/googleplay/android-developer/answer/9866151?visit_id=638362404277113938-416954833&rd=1)
+* соотношение сторон не должно превышать 2:1.  
+[Подробнее](https://support.google.com/googleplay/android-developer/answer/9866151?visit_id=638362404277113938-416954833&rd=1)
 
 ### Требования Google Play к баннеру
 * JPEG или 24-битный PNG (без альфа-канала);
