@@ -88,8 +88,17 @@
 Пользователь может настраивать уведомления о различных событиях (напоминания о плановых расходах, информация о новых статьях и т.д.).
 ## Рекомендуемый стек технологий <a name="stack"></a>
 [к оглавлению](#back)  
-Go/PostgreSQL/Spring
-Minlo/Nginx/Docker
-Gitlab
+Go/PostgreSQL/Spring  
+Minlo/Nginx/Docker  
+Gitlab  
 ## Маркетинговые материалы <a name="market"></a>
 [к оглавлению](#back)
+
+### Требования Google Play к тексту
+* название приложения: не более 30 символов;
+* короткое описание: не более 80 символов;
+* короткое описание: не более 80 символов;
+* полное описание не более 4000 символов
+
+### Требовани Google Play к иконкам 
+[Здесь](https://developer.android.com/distribute/google-play/resources/icon-design-specifications)
