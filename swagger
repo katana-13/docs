@@ -1,0 +1,130 @@
+openapi: 3.0.2
+info:
+  title: 'Cash Advisor'
+  version: '1.0'
+  description: 'Мобильное приложение по учету финансов'
+paths:
+  /auth/register:
+    post:
+      operationId: ' '
+      description: Регистрация пользователя
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomUserCreate'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUserResponseOnCreate'
+          description: 'Ок'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ValidationServerError'
+      tags:
+        - Управление профилем пользователя
+  #  /auth/token получение токена авторизации
+    #/auth/confirm подтверждение эл.почты
+   # /auth/restore восстановление пароля
+   # /auth/change смена пароля
+   
+components:
+  responses:
+    ValidationError:
+      description: 'Ошибки валидации в стандартном формате'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
+    
+    ValidationServerError:
+      description: 'Ошибка сервера'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationServerError'        
+            
+
+  schemas:
+  # -------------Авторизация------------------------------
+    
+    CustomUserCreate:
+      description: 'Производитель'
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 50
+          description: "Адрес электронной почты"
+          example: "illbeback@yandex.ru"
+        password:
+          type: string
+          maxLength: 50
+          description: "Пароль"
+          example: "Qwerty123"
+      required:
+        - email
+        - password
+        
+    CustomUserResponseOnCreate:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          format: email
+          maxLength: 50
+          description: "Адрес электронной почты"
+          example: "illbeback@yandex.ru"
+        #hashed_password:
+        #  type: string
+        #  maxLength: 150
+        #  description: "Фамилия"
+        #  example: "Пупкин"
+        name:
+          type: string
+          maxLength: 50
+          description: "Имя"
+          example: "" 
+  
+ 
+  
+    ValidationError:
+      description: Стандартные ошибки валидации
+      type: object
+      properties:
+        field_name:
+          description: 'Название поля, в котором произошли ошибки. Таких полей может быть несколько'
+          example: [ 'Обязательное поле.' ]
+          type: array
+          items:
+            type: string
+            
+    ValidationServerError:
+      description: Ошибка сервера
+      type: object
+      properties:
+        field_name:
+          description: 'Название поля, в котором произошли ошибки. Таких полей может быть несколько'
+          example: [ 'Обязательное поле.' ]
+          type: array
+          items:
+            type: string
+
+
+
+#securitySchemes:
+#  BearerAuth:
+#    description: 'Авторизация по токену.<br>
+#      Все запросы от имени пользователя должны выполняться с заголовком<br>
+#      "Authorization: Bearer TOKENVALUE"'
+#    type: http
+#    scheme: bearer
+#    bearerFormat: JWT
