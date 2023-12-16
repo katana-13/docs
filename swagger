@@ -74,7 +74,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserLogin'
-
       responses:
         '200':
           description: 'Ок'
@@ -82,8 +81,44 @@ paths:
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/ValidationServerError'
-          
-
+  /auth/restore:
+    post:
+      tags:
+        - Auth 
+      summary: Восстановление пароля
+      description: Объект с почтой пользователя
+      operationId: restorePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestRestorePassword'
+      responses:
+        '200':
+          description: 'Ок'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ValidationServerError'
+  /auth/change:
+    post:
+      tags:
+        - Auth 
+      summary: Смена пароля
+      description: Объект с токеном и новым паролем пользователя
+      operationId: changePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestChangePassword'
+      responses:
+        '200':
+          description: 'Ок'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ValidationServerError'
 
 components:
   responses:
@@ -135,7 +170,8 @@ components:
         code:
           type: integer
           format: int64
-          example: 1111   
+          example: 1111 
+          nullable: true
       required:
         - userId
         - code
@@ -156,6 +192,30 @@ components:
         - email
         - password
     
+    RequestRestorePassword:
+      description: 'Восстановление пароля'
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: "illbeback@yandex.ru" 
+          nullable: true
+      required:
+        - email
+    
+    RequestChangePassword:
+      description: 'Восстановление пароля'
+      type: object
+      properties:
+        token:
+          type: string
+          nullable: true
+        password:
+          type: string
+          example: "Qwerty123"
+          nullable: true
+
     UserResponseOnCreate:
       type: object
       properties:
