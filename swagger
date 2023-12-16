@@ -32,12 +32,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserCreate'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/UserCreate'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UserCreate'
       responses:
         '200':
           content:
@@ -61,12 +55,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserConfirm'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/UserConfirm'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UserConfirm'
       responses:
         '200':
           description: 'Ок'
@@ -74,6 +62,27 @@ paths:
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/ValidationServerError'
+  /auth/token:
+    post:
+      tags:
+        - Auth 
+      summary: Получение токена авторизации
+      description: Объект с учетными данными пользователя
+      operationId: loginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+
+      responses:
+        '200':
+          description: 'Ок'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ValidationServerError'
+          
 
 
 components:
@@ -130,6 +139,22 @@ components:
       required:
         - userId
         - code
+    UserLogin:
+      description: 'Получение токена'
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: "illbeback@yandex.ru" 
+          nullable: true
+        password:
+          type: string
+          example: "Qwerty123" 
+          nullable: true
+      required:
+        - email
+        - password
     
     UserResponseOnCreate:
       type: object
