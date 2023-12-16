@@ -79,6 +79,8 @@ paths:
           description: 'Ок'
         '400':
           $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/AuthenticationError'
         '500':
           $ref: '#/components/responses/ValidationServerError'
   /auth/restore:
@@ -134,7 +136,15 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationServerError'        
+            $ref: '#/components/schemas/ValidationServerError'     
+            
+            
+    AuthenticationError:
+      description: 'Authentication error'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthenticationError'  
             
 
   schemas:
@@ -247,7 +257,6 @@ components:
         error:
           description: 'Описание ошибки'
           type: string
-            
     ValidationServerError:
       description: Server error
       type: object
@@ -255,6 +264,17 @@ components:
         error:
           description: 'Описание ошибки сервера'
           type: string
+    AuthenticationError:
+      description: Authentication error
+      type: object
+      properties:
+        error:
+          description: 'Учетные данные не были предоставлены'
+          type: string
+
+ #     security:
+#      - BearerAuth: []
+
 
 #securitySchemes:
 #  BearerAuth:
