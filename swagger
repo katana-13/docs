@@ -1,48 +1,92 @@
-openapi: 3.0.2
+openapi: 3.0.3
 info:
   title: 'Cash Advisor'
   version: '1.0'
   description: 'Мобильное приложение по учету финансов'
+
+tags:
+  - name: Auth
+    description: Регистрация и авторизация
+  - name: User
+    description: Управление профилем пользователя 
+  - name: Analytics
+    description: Аналитика
+  - name: Tracker
+    description: Финансовый трекер
+  - name: App
+    description: Управление настройками
+
+
 paths:
   /auth/register:
     post:
-      operationId: ' '
+      tags:
+        - Auth
+      summary: Регистрация пользователя
       description: Регистрация пользователя
+      operationId: createUser
       parameters: []
       requestBody:
+        description: Created user object
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomUserCreate'
+              $ref: '#/components/schemas/UserCreate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomUserResponseOnCreate'
+                $ref: '#/components/schemas/UserResponseOnCreate'
           description: 'Ок'
         '400':
           $ref: '#/components/responses/ValidationError'
         '500':
           $ref: '#/components/responses/ValidationServerError'
+  /auth/confirm:
+    post:
       tags:
-        - Управление профилем пользователя
-  #  /auth/token получение токена авторизации
-    #/auth/confirm подтверждение эл.почты
-   # /auth/restore восстановление пароля
-   # /auth/change смена пароля
-   
+        - Auth 
+      summary: Подтверждение электронной почты
+      description: Объект с кодом подтверждения регистрации
+      operationId: confirmEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserConfirm'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UserConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserConfirm'
+      responses:
+        '200':
+          description: 'Ок'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/ValidationServerError'
+
+
 components:
   responses:
     ValidationError:
-      description: 'Ошибки валидации в стандартном формате'
+      description: 'Bad request'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ValidationError'
     
     ValidationServerError:
-      description: 'Ошибка сервера'
+      description: 'Server error'
       content:
         application/json:
           schema:
@@ -52,8 +96,8 @@ components:
   schemas:
   # -------------Авторизация------------------------------
     
-    CustomUserCreate:
-      description: 'Производитель'
+    UserCreate:
+      description: 'Создание пользователя'
       type: object
       properties:
         email:
@@ -71,13 +115,29 @@ components:
         - email
         - password
         
-    CustomUserResponseOnCreate:
+    UserConfirm:
+      description: 'Подтверждение почты'
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+          example: 1  
+        code:
+          type: integer
+          format: int64
+          example: 1111   
+      required:
+        - userId
+        - code
+    
+    UserResponseOnCreate:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        username:
+        email:
           type: string
           format: email
           maxLength: 50
@@ -95,30 +155,21 @@ components:
           example: "" 
   
  
-  
     ValidationError:
-      description: Стандартные ошибки валидации
+      description: Bad request
       type: object
       properties:
-        field_name:
-          description: 'Название поля, в котором произошли ошибки. Таких полей может быть несколько'
-          example: [ 'Обязательное поле.' ]
-          type: array
-          items:
-            type: string
+        error:
+          description: 'Описание ошибки'
+          type: string
             
     ValidationServerError:
-      description: Ошибка сервера
+      description: Server error
       type: object
       properties:
-        field_name:
-          description: 'Название поля, в котором произошли ошибки. Таких полей может быть несколько'
-          example: [ 'Обязательное поле.' ]
-          type: array
-          items:
-            type: string
-
-
+        error:
+          description: 'Описание ошибки сервера'
+          type: string
 
 #securitySchemes:
 #  BearerAuth:
