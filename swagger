@@ -76,7 +76,7 @@ paths:
               $ref: '#/components/schemas/UserLogin'
       responses:
         '200':
-          description: 'Ок'
+          $ref: '#/components/responses/UserLoginOk'
         '400':
           $ref: '#/components/responses/ValidationError'
         '401':
@@ -123,7 +123,15 @@ paths:
           $ref: '#/components/responses/ValidationServerError'
 
 components:
+
   responses:
+    UserLoginOk:
+      description: 'RequestToken'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserLoginOk'
+  
     ValidationError:
       description: 'Bad request'
       content:
@@ -168,7 +176,7 @@ components:
       required:
         - email
         - password
-        
+    
     UserConfirm:
       description: 'Подтверждение почты'
       type: object
@@ -201,6 +209,23 @@ components:
       required:
         - email
         - password
+        
+    UserLoginOk:
+      description: 'Ок'
+      type: object
+      properties:
+        accessToken:
+          type: string
+          nullable: true
+        tokenType:
+          type: string
+        userName:
+          type: string
+        userId:
+          type: string
+      required:
+        - accessToken         
+
     
     RequestRestorePassword:
       description: 'Восстановление пароля'
@@ -215,7 +240,7 @@ components:
         - email
     
     RequestChangePassword:
-      description: 'Смена пароля'
+      description: 'Восстановление пароля'
       type: object
       properties:
         token:
