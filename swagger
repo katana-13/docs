@@ -215,7 +215,7 @@ components:
         - email
     
     RequestChangePassword:
-      description: 'Восстановление пароля'
+      description: 'Смена пароля'
       type: object
       properties:
         token:
